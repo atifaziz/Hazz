@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net461</TargetFrameworks>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="nunit" Version="3.8.1" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.8.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="SelectorTest.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="SelectorTest.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\Fizzler.Systems.HtmlAgilityPack.csproj" />
+  </ItemGroup>
+
+</Project>

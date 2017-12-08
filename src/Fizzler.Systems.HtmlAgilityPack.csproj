@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net35</TargetFramework>
+    <VersionPrefix>1.2.0</VersionPrefix>
+    <Authors>Atif Aziz, Colin Ramsay</Authors>
+    <Company />
+    <Product>Fizzler</Product>
+    <Description>Fizzler is a W3C Selectors parser and generic selector framework for document hierarchies. This package enables Fizzler over HTMLAgilityPack, adding QuerySelector and QuerySelectorAll (from Selectors API Level 1) for HtmlNode objects.</Description>
+    <Copyright>Copyright © 2009 Atif Aziz, Colin Ramsay. All rights reserved.</Copyright>
+    <PackageLicenseUrl>http://www.gnu.org/licenses/lgpl.html</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/atifaziz/Hazz</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/atifaziz/Hazz</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>selectors w3c html css</PackageTags>
+    <AssemblyVersion>1.1.21209.0</AssemblyVersion>
+    <FileVersion>1.1.21209.1357</FileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\bin\Debug\net35\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\bin\Release\net35\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Fizzler" Version="1.1.0" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.5.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\COPYING.LESSER.txt" Link="COPYING.LESSER.txt">
+      <PackagePath />
+    </Content>
+    <Content Include="..\COPYING.txt" Link="COPYING.txt">
+      <PackagePath />
+    </Content>
+  </ItemGroup>
+</Project>
