@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard1.3</TargetFramework>
     <VersionPrefix>1.2.0</VersionPrefix>
+    <LangVersion>7</LangVersion>
     <Authors>Atif Aziz, Colin Ramsay</Authors>
     <Company />
     <Product>Fizzler</Product>
