@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net35</TargetFramework>
+    <TargetFramework>netstandard1.3</TargetFramework>
     <VersionPrefix>1.2.0</VersionPrefix>
     <Authors>Atif Aziz, Colin Ramsay</Authors>
     <Company />
@@ -16,13 +16,13 @@
     <FileVersion>1.1.21209.1357</FileVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>..\bin\Debug\net35\</OutputPath>
+    <OutputPath>..\bin\Debug\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>..\bin\Release\net35\</OutputPath>
+    <OutputPath>..\bin\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Fizzler" Version="1.1.0" />
+    <PackageReference Include="Fizzler" Version="1.2.0" />
     <PackageReference Include="HtmlAgilityPack" Version="1.5.1" />
   </ItemGroup>
   <ItemGroup>
