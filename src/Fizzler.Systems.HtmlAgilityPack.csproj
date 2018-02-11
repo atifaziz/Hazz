@@ -12,6 +12,9 @@
     <RepositoryUrl>https://github.com/atifaziz/Hazz</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <PackageTags>selectors;w3c;html;css</PackageTags>
+    <PackageOutputPath>..\dist</PackageOutputPath>
+    <IncludeSymbols>true</IncludeSymbols>
+    <IncludeSource>true</IncludeSource>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>..\bin\Debug\</OutputPath>
