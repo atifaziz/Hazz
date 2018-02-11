@@ -11,7 +11,7 @@
     <PackageProjectUrl>https://github.com/atifaziz/Hazz</PackageProjectUrl>
     <RepositoryUrl>https://github.com/atifaziz/Hazz</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
-    <PackageTags>selectors w3c html css</PackageTags>
+    <PackageTags>selectors;w3c;html;css</PackageTags>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>..\bin\Debug\</OutputPath>
