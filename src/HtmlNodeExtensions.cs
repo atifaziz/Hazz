@@ -88,13 +88,11 @@ namespace Fizzler.Systems.HtmlAgilityPack
         public static IEnumerable<HtmlNode> NodesAfterSelf(this HtmlNode node)
         {
             if (node == null) throw new ArgumentNullException(nameof(node));
-            return NodesAfterSelfImpl(node);
-        }
-
-        static IEnumerable<HtmlNode> NodesAfterSelfImpl(HtmlNode node)
-        {
-            while ((node = node.NextSibling) != null)
-                yield return node;
+            return _(); IEnumerable<HtmlNode> _()
+            {
+                while ((node = node.NextSibling) != null)
+                    yield return node;
+            }
         }
 
         /// <summary>
@@ -112,13 +110,11 @@ namespace Fizzler.Systems.HtmlAgilityPack
         public static IEnumerable<HtmlNode> NodesBeforeSelf(this HtmlNode node)
         {
             if (node == null) throw new ArgumentNullException(nameof(node));
-            return NodesBeforeSelfImpl(node);
-        }
-
-        static IEnumerable<HtmlNode> NodesBeforeSelfImpl(HtmlNode node)
-        {
-            while ((node = node.PreviousSibling) != null)
-                yield return node;
+            return _(); IEnumerable<HtmlNode> _()
+            {
+                while ((node = node.PreviousSibling) != null)
+                    yield return node;
+            }
         }
 
         /// <summary>
@@ -137,17 +133,15 @@ namespace Fizzler.Systems.HtmlAgilityPack
         public static IEnumerable<HtmlNode> Descendants(this HtmlNode node)
         {
             if (node == null) throw new ArgumentNullException(nameof(node));
-            return DescendantsImpl(node);
-        }
-
-        static IEnumerable<HtmlNode> DescendantsImpl(HtmlNode node)
-        {
-            Debug.Assert(node != null);
-            foreach (var child in node.ChildNodes)
+            return _(); IEnumerable<HtmlNode> _()
             {
-                yield return child;
-                foreach (var descendant in child.Descendants())
-                    yield return descendant;
+                Debug.Assert(node != null);
+                foreach (var child in node.ChildNodes)
+                {
+                    yield return child;
+                    foreach (var descendant in child.Descendants())
+                        yield return descendant;
+                }
             }
         }
 
