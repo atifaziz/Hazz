@@ -12,8 +12,6 @@
     <RepositoryUrl>https://github.com/atifaziz/Hazz</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <PackageTags>selectors w3c html css</PackageTags>
-    <AssemblyVersion>1.1.21209.0</AssemblyVersion>
-    <FileVersion>1.1.21209.1357</FileVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>..\bin\Debug\</OutputPath>
