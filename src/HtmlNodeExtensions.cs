@@ -61,7 +61,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
         public static IEnumerable<HtmlNode> Children(this HtmlNode node)
         {
             if (node == null) throw new ArgumentNullException(nameof(node));
-            return node.ChildNodes.Cast<HtmlNode>();
+            return node.ChildNodes;
         }
 
         /// <summary>
