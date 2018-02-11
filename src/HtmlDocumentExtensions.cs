@@ -37,7 +37,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
 
     public static class HtmlDocumentExtensions
     {
-        private static object _lock = new object();
+        private static readonly object _lock = new object();
         private static Dictionary<string, HtmlElementFlag> _defaultElementFlags;
 
         /// <summary>
