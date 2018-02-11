@@ -31,7 +31,7 @@ namespace Fizzler.Tests
         [Test]
         public void Element_Prefix_With_Digit()
         {
-            var result = SelectList("span:nth-last-child(3)"); 
+            var result = SelectList("span:nth-last-child(3)");
 
             Assert.AreEqual(0, result.Count);
         }
@@ -40,7 +40,7 @@ namespace Fizzler.Tests
         public void Element_Prefix_With_Digit2()
         {
             var result = SelectList("span:nth-last-child(2)");
- 
+
             Assert.AreEqual(1, result.Count);
             Assert.AreEqual("span", result[0].Name);
         }

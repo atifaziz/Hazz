@@ -1,22 +1,22 @@
 #region Copyright and License
-// 
+//
 // Fizzler - CSS Selector Engine for Microsoft .NET Framework
 // Copyright (c) 2009 Atif Aziz, Colin Ramsay. All rights reserved.
-// 
-// This library is free software; you can redistribute it and/or modify it under 
-// the terms of the GNU Lesser General Public License as published by the Free 
-// Software Foundation; either version 3 of the License, or (at your option) 
+//
+// This library is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Lesser General Public License as published by the Free
+// Software Foundation; either version 3 of the License, or (at your option)
 // any later version.
-// 
-// This library is distributed in the hope that it will be useful, but WITHOUT 
-// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
-// FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more 
+//
+// This library is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
 // details.
-// 
-// You should have received a copy of the GNU Lesser General Public License 
-// along with this library; if not, write to the Free Software Foundation, Inc., 
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
-// 
+//
+// You should have received a copy of the GNU Lesser General Public License
+// along with this library; if not, write to the Free Software Foundation, Inc.,
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
 #endregion
 
 namespace Fizzler.Systems.HtmlAgilityPack
@@ -41,8 +41,8 @@ namespace Fizzler.Systems.HtmlAgilityPack
         private static readonly HtmlNodeOps _ops = new HtmlNodeOps();
 
         /// <summary>
-        /// Similar to <see cref="QuerySelectorAll(HtmlNode,string)" /> 
-        /// except it returns only the first element matching the supplied 
+        /// Similar to <see cref="QuerySelectorAll(HtmlNode,string)" />
+        /// except it returns only the first element matching the supplied
         /// selector strings.
         /// </summary>
         public static HtmlNode QuerySelector(this HtmlNode node, string selector)
@@ -51,9 +51,9 @@ namespace Fizzler.Systems.HtmlAgilityPack
         }
 
         /// <summary>
-        /// Retrieves all element nodes from descendants of the starting 
-        /// element node that match any selector within the supplied 
-        /// selector strings. 
+        /// Retrieves all element nodes from descendants of the starting
+        /// element node that match any selector within the supplied
+        /// selector strings.
         /// </summary>
         public static IEnumerable<HtmlNode> QuerySelectorAll(this HtmlNode node, string selector)
         {
@@ -61,10 +61,10 @@ namespace Fizzler.Systems.HtmlAgilityPack
         }
 
         /// <summary>
-        /// Retrieves all element nodes from descendants of the starting 
-        /// element node that match any selector within the supplied 
-        /// selector strings. An additional parameter specifies a 
-        /// particular compiler to use for parsing and compiling the 
+        /// Retrieves all element nodes from descendants of the starting
+        /// element node that match any selector within the supplied
+        /// selector strings. An additional parameter specifies a
+        /// particular compiler to use for parsing and compiling the
         /// selector.
         /// </summary>
         /// <remarks>
@@ -99,7 +99,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
         private static readonly Func<string, Func<HtmlNode, IEnumerable<HtmlNode>>> _defaultCachingCompiler = CreateCachingCompiler();
 
         /// <summary>
-        /// Compiles a selector. If the selector has been previously 
+        /// Compiles a selector. If the selector has been previously
         /// compiled then this method returns it rather than parsing
         /// and compiling the selector on each invocation.
         /// </summary>
@@ -129,7 +129,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
         /// </summary>
         /// <remarks>
         /// If <paramref name="cache"/> is <c>null</c> then this method uses a
-        /// the <see cref="Dictionary{TKey,TValue}"/> implementation with an 
+        /// the <see cref="Dictionary{TKey,TValue}"/> implementation with an
         /// ordinally case-insensitive selectors text comparer.
         /// </remarks>
         public static Func<string, Func<HtmlNode, IEnumerable<HtmlNode>>> CreateCachingCompiler(IDictionary<string, Func<HtmlNode, IEnumerable<HtmlNode>>> cache)

@@ -1,22 +1,22 @@
 #region Copyright and License
-// 
+//
 // Fizzler - CSS Selector Engine for Microsoft .NET Framework
 // Copyright (c) 2009 Atif Aziz, Colin Ramsay. All rights reserved.
-// 
-// This library is free software; you can redistribute it and/or modify it under 
-// the terms of the GNU Lesser General Public License as published by the Free 
-// Software Foundation; either version 3 of the License, or (at your option) 
+//
+// This library is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Lesser General Public License as published by the Free
+// Software Foundation; either version 3 of the License, or (at your option)
 // any later version.
-// 
-// This library is distributed in the hope that it will be useful, but WITHOUT 
-// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
-// FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more 
+//
+// This library is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
 // details.
-// 
-// You should have received a copy of the GNU Lesser General Public License 
-// along with this library; if not, write to the Free Software Foundation, Inc., 
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
-// 
+//
+// You should have received a copy of the GNU Lesser General Public License
+// along with this library; if not, write to the Free Software Foundation, Inc.,
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
 #endregion
 
 namespace Fizzler.Tests
@@ -30,7 +30,7 @@ namespace Fizzler.Tests
         public void Basic_Selector()
         {
             var result = SelectList("#myDiv");
-            
+
             Assert.AreEqual(1, result.Count);
             Assert.AreEqual("div", result[0].Name);
         }
@@ -43,7 +43,7 @@ namespace Fizzler.Tests
             Assert.AreEqual(1, result.Count);
             Assert.AreEqual("div", result[0].Name);
         }
-        
+
         [Test]
         public void With_Existing_ID_Descendant()
         {
@@ -78,7 +78,7 @@ namespace Fizzler.Tests
             Assert.AreEqual("div", result[0].Name);
             Assert.AreEqual("p", result[1].Name);
         }
-        
+
         [Test]
         public void Child_ID()
         {
@@ -95,7 +95,7 @@ namespace Fizzler.Tests
 
             Assert.AreEqual(0, result.Count);
         }
-        
+
         [Test]
         public void All_Children_Of_ID()
         {
@@ -105,7 +105,7 @@ namespace Fizzler.Tests
             Assert.AreEqual("div", result[0].Name);
             Assert.AreEqual("p", result[1].Name);
         }
-        
+
         [Test]
         public void All_Children_of_ID_with_no_children()
         {

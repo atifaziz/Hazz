@@ -21,13 +21,13 @@ html.LoadHtml(@"
       </body>
   </html>");
 
-// Fizzler for HtmlAgilityPack is implemented as the 
+// Fizzler for HtmlAgilityPack is implemented as the
 // QuerySelectorAll extension method on HtmlNode
 
 var document = html.DocumentNode;
 
 // yields: [<p class="content">Fizzler</p>]
-document.QuerySelectorAll(".content"); 
+document.QuerySelectorAll(".content");
 
 // yields: [<p class="content">Fizzler</p>,<p>CSS Selector Engine</p>]
 document.QuerySelectorAll("p");
