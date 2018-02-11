@@ -37,7 +37,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
 
     public static class HtmlDocumentExtensions
     {
-        private static readonly object _lock = new object();
+        private static readonly object Lock = new object();
         private static Dictionary<string, HtmlElementFlag> _defaultElementFlags;
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
         public static void LoadHtmlWithElementFlags(this HtmlDocument document, string html, IEnumerable<KeyValuePair<string, HtmlElementFlag>> flags)
         {
             if (document == null) throw new ArgumentNullException(nameof(document));
-            lock (_lock)
+            lock (Lock)
                 LoadWithElementFlags(flags, () => document.LoadHtml(html));
         }
 
@@ -108,7 +108,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
         public static void LoadWithElementFlags(this HtmlDocument document, string path, IEnumerable<KeyValuePair<string, HtmlElementFlag>> flags)
         {
             if (document == null) throw new ArgumentNullException(nameof(document));
-            lock (_lock)
+            lock (Lock)
                 LoadWithElementFlags(flags, () => document.Load(path));
         }
 

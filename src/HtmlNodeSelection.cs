@@ -38,7 +38,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
     /// </remarks>
     public static class HtmlNodeSelection
     {
-        private static readonly HtmlNodeOps _ops = new HtmlNodeOps();
+        private static readonly HtmlNodeOps Ops = new HtmlNodeOps();
 
         /// <summary>
         /// Similar to <see cref="QuerySelectorAll(HtmlNode,string)" />
@@ -87,7 +87,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
         /// </remarks>
         public static Func<HtmlNode, IEnumerable<HtmlNode>> Compile(string selector)
         {
-            var compiled = Parser.Parse(selector, new SelectorGenerator<HtmlNode>(_ops)).Selector;
+            var compiled = Parser.Parse(selector, new SelectorGenerator<HtmlNode>(Ops)).Selector;
             return node => compiled(Enumerable.Repeat(node, 1));
         }
 
@@ -95,8 +95,8 @@ namespace Fizzler.Systems.HtmlAgilityPack
         // Caching
         //
 
-        [ThreadStatic] 
-        private static readonly Func<string, Func<HtmlNode, IEnumerable<HtmlNode>>> _defaultCachingCompiler = CreateCachingCompiler();
+        [ThreadStatic]
+        private static readonly Func<string, Func<HtmlNode, IEnumerable<HtmlNode>>> DefaultCachingCompiler = CreateCachingCompiler();
 
         /// <summary>
         /// Compiles a selector. If the selector has been previously
@@ -109,7 +109,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
         /// </remarks>
         public static Func<HtmlNode, IEnumerable<HtmlNode>> CachableCompile(string selector)
         {
-            return _defaultCachingCompiler(selector);
+            return DefaultCachingCompiler(selector);
         }
 
         /// <summary>
