@@ -44,7 +44,7 @@ namespace Fizzler.Tests
             using (var stream = assembly.GetManifestResourceStream(resourceName))
             {
                 if (stream == null)
-                    throw new Exception(string.Format("Resource, named {0}, not found.", resourceName));
+                    throw new Exception($"Resource, named {resourceName}, not found.");
                 using(var reader = new StreamReader(stream))
                     html = reader.ReadToEnd();
             }
@@ -53,16 +53,12 @@ namespace Fizzler.Tests
             Document = document;
         }
 
-        protected HtmlDocument Document { get; private set; }
+        protected HtmlDocument Document { get; }
 
-        protected IEnumerable<HtmlNode> Select(string selectorChain)
-        {
-            return Document.DocumentNode.QuerySelectorAll(selectorChain);
-        }
+        protected IEnumerable<HtmlNode> Select(string selectorChain) =>
+            Document.DocumentNode.QuerySelectorAll(selectorChain);
 
-        protected IList<HtmlNode> SelectList(string selectorChain)
-        {
-            return new ReadOnlyCollection<HtmlNode>(Select(selectorChain).ToArray());
-        }
+        protected IList<HtmlNode> SelectList(string selectorChain) =>
+            new ReadOnlyCollection<HtmlNode>(Select(selectorChain).ToArray());
     }
 }

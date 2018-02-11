@@ -36,8 +36,8 @@ namespace Fizzler.Systems.HtmlAgilityPack
 
     public static class HtmlDocumentExtensions
     {
-        private static readonly object Lock = new object();
-        private static Dictionary<string, HtmlElementFlag> _defaultElementFlags;
+        static readonly object Lock = new object();
+        static Dictionary<string, HtmlElementFlag> _defaultElementFlags;
 
         /// <summary>
         /// Same as <see cref="HtmlDocument.LoadHtml" /> but without the FORM nesting
@@ -111,9 +111,9 @@ namespace Fizzler.Systems.HtmlAgilityPack
                 LoadWithElementFlags(flags, () => document.Load(path));
         }
 
-        private delegate void LoadHandler();
+        delegate void LoadHandler();
 
-        private static void LoadWithElementFlags(IEnumerable<KeyValuePair<string, HtmlElementFlag>> flags, LoadHandler loader)
+        static void LoadWithElementFlags(IEnumerable<KeyValuePair<string, HtmlElementFlag>> flags, LoadHandler loader)
         {
             Dictionary<string, HtmlElementFlag> oldFlags = null;
             try
@@ -132,13 +132,13 @@ namespace Fizzler.Systems.HtmlAgilityPack
             }
         }
 
-        private static Dictionary<TKey, TValue> Clone<TKey, TValue>(this Dictionary<TKey, TValue> source)
+        static Dictionary<TKey, TValue> Clone<TKey, TValue>(this Dictionary<TKey, TValue> source)
         {
             Debug.Assert(source != null);
             return new Dictionary<TKey, TValue>(source, source.Comparer);
         }
 
-        private static void Reload<TKey, TValue>(this IDictionary<TKey, TValue> target, IEnumerable<KeyValuePair<TKey, TValue>> source)
+        static void Reload<TKey, TValue>(this IDictionary<TKey, TValue> target, IEnumerable<KeyValuePair<TKey, TValue>> source)
         {
             Debug.Assert(source != null);
             Debug.Assert(target != null);
@@ -148,7 +148,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
                 target[entry.Key] = entry.Value;
         }
 
-        private static Dictionary<string, HtmlElementFlag> DefaultElementFlags
+        static Dictionary<string, HtmlElementFlag> DefaultElementFlags
         {
             get
             {

@@ -38,27 +38,23 @@ namespace Fizzler.Systems.HtmlAgilityPack
     /// </remarks>
     public static class HtmlNodeSelection
     {
-        private static readonly HtmlNodeOps Ops = new HtmlNodeOps();
+        static readonly HtmlNodeOps Ops = new HtmlNodeOps();
 
         /// <summary>
         /// Similar to <see cref="QuerySelectorAll(HtmlNode,string)" />
         /// except it returns only the first element matching the supplied
         /// selector strings.
         /// </summary>
-        public static HtmlNode QuerySelector(this HtmlNode node, string selector)
-        {
-            return node.QuerySelectorAll(selector).FirstOrDefault();
-        }
+        public static HtmlNode QuerySelector(this HtmlNode node, string selector) =>
+            node.QuerySelectorAll(selector).FirstOrDefault();
 
         /// <summary>
         /// Retrieves all element nodes from descendants of the starting
         /// element node that match any selector within the supplied
         /// selector strings.
         /// </summary>
-        public static IEnumerable<HtmlNode> QuerySelectorAll(this HtmlNode node, string selector)
-        {
-            return QuerySelectorAll(node, selector, null);
-        }
+        public static IEnumerable<HtmlNode> QuerySelectorAll(this HtmlNode node, string selector) =>
+            QuerySelectorAll(node, selector, null);
 
         /// <summary>
         /// Retrieves all element nodes from descendants of the starting
@@ -73,10 +69,8 @@ namespace Fizzler.Systems.HtmlAgilityPack
         /// often, it is recommended to use a caching compiler such as the
         /// one supplied by <see cref="CreateCachingCompiler()"/>.
         /// </remarks>
-        public static IEnumerable<HtmlNode> QuerySelectorAll(this HtmlNode node, string selector, Func<string, Func<HtmlNode, IEnumerable<HtmlNode>>> compiler)
-        {
-            return (compiler ?? Compile)(selector)(node);
-        }
+        public static IEnumerable<HtmlNode> QuerySelectorAll(this HtmlNode node, string selector, Func<string, Func<HtmlNode, IEnumerable<HtmlNode>>> compiler) =>
+            (compiler ?? Compile)(selector)(node);
 
         /// <summary>
         /// Parses and compiles CSS selector text into run-time function.
@@ -96,7 +90,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
         //
 
         [ThreadStatic]
-        private static readonly Func<string, Func<HtmlNode, IEnumerable<HtmlNode>>> DefaultCachingCompiler = CreateCachingCompiler();
+        static readonly Func<string, Func<HtmlNode, IEnumerable<HtmlNode>>> DefaultCachingCompiler = CreateCachingCompiler();
 
         /// <summary>
         /// Compiles a selector. If the selector has been previously
@@ -107,20 +101,16 @@ namespace Fizzler.Systems.HtmlAgilityPack
         /// The cache is per-thread and therefore thread-safe without
         /// lock contention.
         /// </remarks>
-        public static Func<HtmlNode, IEnumerable<HtmlNode>> CachableCompile(string selector)
-        {
-            return DefaultCachingCompiler(selector);
-        }
+        public static Func<HtmlNode, IEnumerable<HtmlNode>> CachableCompile(string selector) =>
+            DefaultCachingCompiler(selector);
 
         /// <summary>
         /// Creates a caching selector compiler that uses a default
         /// cache strategy when the selector text is regarded as being
         /// orginally case-insensitive.
         /// </summary>
-        public static Func<string, Func<HtmlNode, IEnumerable<HtmlNode>>> CreateCachingCompiler()
-        {
-            return CreateCachingCompiler(null);
-        }
+        public static Func<string, Func<HtmlNode, IEnumerable<HtmlNode>>> CreateCachingCompiler() =>
+            CreateCachingCompiler(null);
 
         /// <summary>
         /// Creates a caching selector compiler where the compiled selectors
@@ -132,9 +122,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
         /// the <see cref="Dictionary{TKey,TValue}"/> implementation with an
         /// ordinally case-insensitive selectors text comparer.
         /// </remarks>
-        public static Func<string, Func<HtmlNode, IEnumerable<HtmlNode>>> CreateCachingCompiler(IDictionary<string, Func<HtmlNode, IEnumerable<HtmlNode>>> cache)
-        {
-            return SelectorsCachingCompiler.Create(Compile, cache);
-        }
+        public static Func<string, Func<HtmlNode, IEnumerable<HtmlNode>>> CreateCachingCompiler(IDictionary<string, Func<HtmlNode, IEnumerable<HtmlNode>>> cache) =>
+            SelectorsCachingCompiler.Create(Compile, cache);
     }
 }

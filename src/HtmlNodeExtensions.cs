@@ -91,7 +91,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
             return NodesAfterSelfImpl(node);
         }
 
-        private static IEnumerable<HtmlNode> NodesAfterSelfImpl(HtmlNode node)
+        static IEnumerable<HtmlNode> NodesAfterSelfImpl(HtmlNode node)
         {
             while ((node = node.NextSibling) != null)
                 yield return node;
@@ -115,7 +115,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
             return NodesBeforeSelfImpl(node);
         }
 
-        private static IEnumerable<HtmlNode> NodesBeforeSelfImpl(HtmlNode node)
+        static IEnumerable<HtmlNode> NodesBeforeSelfImpl(HtmlNode node)
         {
             while ((node = node.PreviousSibling) != null)
                 yield return node;
@@ -140,7 +140,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
             return DescendantsImpl(node);
         }
 
-        private static IEnumerable<HtmlNode> DescendantsImpl(HtmlNode node)
+        static IEnumerable<HtmlNode> DescendantsImpl(HtmlNode node)
         {
             Debug.Assert(node != null);
             foreach (var child in node.ChildNodes)
