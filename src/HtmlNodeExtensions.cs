@@ -42,7 +42,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
         /// </summary>
         public static bool IsElement(this HtmlNode node)
         {
-            if (node == null) throw new ArgumentNullException("node");
+            if (node == null) throw new ArgumentNullException(nameof(node));
             return node.NodeType == HtmlNodeType.Element;
         }
 
@@ -51,7 +51,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
         /// </summary>
         public static IEnumerable<HtmlNode> Elements(this IEnumerable<HtmlNode> nodes)
         {
-            if (nodes == null) throw new ArgumentNullException("nodes");
+            if (nodes == null) throw new ArgumentNullException(nameof(nodes));
             return nodes.Where(n => n.IsElement());
         }
 
@@ -60,7 +60,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
         /// </summary>
         public static IEnumerable<HtmlNode> Children(this HtmlNode node)
         {
-            if (node == null) throw new ArgumentNullException("node");
+            if (node == null) throw new ArgumentNullException(nameof(node));
             return node.ChildNodes.Cast<HtmlNode>();
         }
 
@@ -69,7 +69,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
         /// </summary>
         public static IEnumerable<HtmlNode> Elements(this HtmlNode node)
         {
-            if (node == null) throw new ArgumentNullException("node");
+            if (node == null) throw new ArgumentNullException(nameof(node));
             return node.Children().Elements();
         }
 
@@ -78,7 +78,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
         /// </summary>
         public static IEnumerable<HtmlNode> ElementsAfterSelf(this HtmlNode node)
         {
-            if (node == null) throw new ArgumentNullException("node");
+            if (node == null) throw new ArgumentNullException(nameof(node));
             return node.NodesAfterSelf().Elements();
         }
 
@@ -87,7 +87,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
         /// </summary>
         public static IEnumerable<HtmlNode> NodesAfterSelf(this HtmlNode node)
         {
-            if (node == null) throw new ArgumentNullException("node");
+            if (node == null) throw new ArgumentNullException(nameof(node));
             return NodesAfterSelfImpl(node);
         }
 
@@ -102,7 +102,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
         /// </summary>
         public static IEnumerable<HtmlNode> ElementsBeforeSelf(this HtmlNode node)
         {
-            if (node == null) throw new ArgumentNullException("node");
+            if (node == null) throw new ArgumentNullException(nameof(node));
             return node.NodesBeforeSelf().Elements();
         }
 
@@ -111,7 +111,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
         /// </summary>
         public static IEnumerable<HtmlNode> NodesBeforeSelf(this HtmlNode node)
         {
-            if (node == null) throw new ArgumentNullException("node");
+            if (node == null) throw new ArgumentNullException(nameof(node));
             return NodesBeforeSelfImpl(node);
         }
 
@@ -127,7 +127,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
         /// </summary>
         public static IEnumerable<HtmlNode> DescendantsAndSelf(this HtmlNode node)
         {
-            if (node == null) throw new ArgumentNullException("node");
+            if (node == null) throw new ArgumentNullException(nameof(node));
             return Enumerable.Repeat(node, 1).Concat(node.Descendants());
         }
 
@@ -136,7 +136,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
         /// </summary>
         public static IEnumerable<HtmlNode> Descendants(this HtmlNode node)
         {
-            if (node == null) throw new ArgumentNullException("node");
+            if (node == null) throw new ArgumentNullException(nameof(node));
             return DescendantsImpl(node);
         }
 
@@ -157,7 +157,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
         /// </summary>
         public static string GetBeginTagString(this HtmlNode node)
         {
-            if(node == null) throw new ArgumentNullException("node");
+            if(node == null) throw new ArgumentNullException(nameof(node));
 
             if (!node.IsElement())
                 return string.Empty;

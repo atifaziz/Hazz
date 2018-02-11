@@ -51,7 +51,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
 
         public static void LoadHtml2(this HtmlDocument document, string html)
         {
-            if (document == null) throw new ArgumentNullException("document");
+            if (document == null) throw new ArgumentNullException(nameof(document));
             document.LoadHtmlWithElementFlags(html, DefaultElementFlags);
         }
 
@@ -66,7 +66,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
 
         public static void Load2(this HtmlDocument document, string path)
         {
-            if (document == null) throw new ArgumentNullException("document");
+            if (document == null) throw new ArgumentNullException(nameof(document));
             document.LoadWithElementFlags(path, DefaultElementFlags);
         }
 
@@ -86,7 +86,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
 
         public static void LoadHtmlWithElementFlags(this HtmlDocument document, string html, IEnumerable<KeyValuePair<string, HtmlElementFlag>> flags)
         {
-            if (document == null) throw new ArgumentNullException("document");
+            if (document == null) throw new ArgumentNullException(nameof(document));
             lock (_lock)
                 LoadWithElementFlags(flags, () => document.LoadHtml(html));
         }
@@ -107,7 +107,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
 
         public static void LoadWithElementFlags(this HtmlDocument document, string path, IEnumerable<KeyValuePair<string, HtmlElementFlag>> flags)
         {
-            if (document == null) throw new ArgumentNullException("document");
+            if (document == null) throw new ArgumentNullException(nameof(document));
             lock (_lock)
                 LoadWithElementFlags(flags, () => document.Load(path));
         }
