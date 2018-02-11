@@ -26,7 +26,6 @@ namespace Fizzler.Systems.HtmlAgilityPack
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
-    using System.Runtime.CompilerServices;
     using global::HtmlAgilityPack;
 
     #endregion
