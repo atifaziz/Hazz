@@ -69,8 +69,12 @@ namespace Fizzler.Systems.HtmlAgilityPack
         /// often, it is recommended to use a caching compiler such as the
         /// one supplied by <see cref="CreateCachingCompiler()"/>.
         /// </remarks>
-        public static IEnumerable<HtmlNode> QuerySelectorAll(this HtmlNode node, string selector, Func<string, Func<HtmlNode, IEnumerable<HtmlNode>>> compiler) =>
-            (compiler ?? Compile)(selector)(node);
+        public static IEnumerable<HtmlNode> QuerySelectorAll(this HtmlNode node, string selector, Func<string, Func<HtmlNode, IEnumerable<HtmlNode>>> compiler)
+        {
+            if (node == null) throw new ArgumentNullException(nameof(node));
+            if (selector == null) throw new ArgumentNullException(nameof(selector));
+            return (compiler ?? Compile)(selector)(node);
+        }
 
         /// <summary>
         /// Parses and compiles CSS selector text into run-time function.
