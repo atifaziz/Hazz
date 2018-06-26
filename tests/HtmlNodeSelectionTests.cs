@@ -22,6 +22,7 @@
 namespace Fizzler.Tests
 {
     using System;
+    using System.Threading;
     using Systems.HtmlAgilityPack;
     using HtmlAgilityPack;
     using NUnit.Framework;
@@ -53,6 +54,16 @@ namespace Fizzler.Tests
             var e = Assert.Throws<ArgumentNullException>(() =>
                 HtmlNodeSelection.Compile(null));
             Assert.That(e.ParamName, Is.EqualTo("selector"));
+        }
+
+        [Test(Description = "https://github.com/atifaziz/Hazz/issues/3")]
+        public void Issue3()
+        {
+            void Test() => HtmlNodeSelection.CachableCompile("p");
+            Test();
+            var thread = new Thread(Test);
+            thread.Start();
+            thread.Join();
         }
     }
 }

@@ -95,7 +95,10 @@ namespace Fizzler.Systems.HtmlAgilityPack
         //
 
         [ThreadStatic]
-        static readonly Func<string, Func<HtmlNode, IEnumerable<HtmlNode>>> DefaultCachingCompiler = CreateCachingCompiler();
+        static Func<string, Func<HtmlNode, IEnumerable<HtmlNode>>> _defaultCachingCompiler;
+
+        static Func<string, Func<HtmlNode, IEnumerable<HtmlNode>>> DefaultCachingCompiler =>
+            _defaultCachingCompiler ?? (_defaultCachingCompiler = CreateCachingCompiler());
 
         /// <summary>
         /// Compiles a selector. If the selector has been previously
