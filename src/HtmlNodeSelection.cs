@@ -85,6 +85,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
         /// </remarks>
         public static Func<HtmlNode, IEnumerable<HtmlNode>> Compile(string selector)
         {
+            if (selector == null) throw new ArgumentNullException(nameof(selector));
             var compiled = Parser.Parse(selector, new SelectorGenerator<HtmlNode>(Ops)).Selector;
             return node => compiled(Enumerable.Repeat(node, 1));
         }
