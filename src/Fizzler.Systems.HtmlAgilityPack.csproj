@@ -10,12 +10,12 @@
     <Copyright>Copyright © 2009 Atif Aziz, Colin Ramsay. All rights reserved.</Copyright>
     <PackageLicenseFile>COPYING.txt</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/atifaziz/Hazz</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/atifaziz/Hazz</RepositoryUrl>
-    <RepositoryType>Git</RepositoryType>
     <PackageTags>selectors;w3c;html;css</PackageTags>
     <PackageOutputPath>..\dist</PackageOutputPath>
     <IncludeSymbols>true</IncludeSymbols>
     <IncludeSource>true</IncludeSource>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>..\bin\Debug\</OutputPath>
@@ -26,6 +26,7 @@
   <ItemGroup>
     <PackageReference Include="Fizzler" Version="1.2.0" />
     <PackageReference Include="HtmlAgilityPack" Version="1.5.1" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-*" PrivateAssets="all" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\COPYING.txt" Pack="true" PackagePath="$(PackageLicenseFile)" />
