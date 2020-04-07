@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29911.84
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fizzler.Systems.HtmlAgilityPack", "src\Fizzler.Systems.HtmlAgilityPack.csproj", "{3A6AD3FC-CE4F-46F2-B80D-B9F2728A5FCC}"
 EndProject
@@ -11,7 +11,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 		appveyor.yml = appveyor.yml
 		build.cmd = build.cmd
-		COPYING.LESSER.txt = COPYING.LESSER.txt
 		COPYING.txt = COPYING.txt
 		global.json = global.json
 		pack.cmd = pack.cmd

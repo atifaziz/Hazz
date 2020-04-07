@@ -8,7 +8,7 @@
     <Product>Fizzler</Product>
     <Description>Fizzler is a W3C Selectors parser and generic selector framework for document hierarchies. This package enables Fizzler over HTMLAgilityPack, adding QuerySelector and QuerySelectorAll (from Selectors API Level 1) for HtmlNode objects.</Description>
     <Copyright>Copyright © 2009 Atif Aziz, Colin Ramsay. All rights reserved.</Copyright>
-    <PackageLicenseUrl>http://www.gnu.org/licenses/lgpl.html</PackageLicenseUrl>
+    <PackageLicenseFile>COPYING.txt</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/atifaziz/Hazz</PackageProjectUrl>
     <RepositoryUrl>https://github.com/atifaziz/Hazz</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
@@ -28,11 +28,6 @@
     <PackageReference Include="HtmlAgilityPack" Version="1.5.1" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\COPYING.LESSER.txt" Link="COPYING.LESSER.txt">
-      <PackagePath />
-    </Content>
-    <Content Include="..\COPYING.txt" Link="COPYING.txt">
-      <PackagePath />
-    </Content>
+    <None Include="..\COPYING.txt" Pack="true" PackagePath="$(PackageLicenseFile)" />
   </ItemGroup>
 </Project>
