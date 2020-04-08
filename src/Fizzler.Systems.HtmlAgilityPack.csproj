@@ -31,4 +31,7 @@
   <ItemGroup>
     <None Include="..\COPYING.txt" Pack="true" PackagePath="$(PackageLicenseFile)" />
   </ItemGroup>
+  <PropertyGroup>
+    <EmbedUntrackedSource>true</EmbedUntrackedSource>
+  </PropertyGroup>
 </Project>
