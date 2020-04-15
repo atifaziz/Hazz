@@ -70,8 +70,16 @@ namespace Fizzler.Systems.HtmlAgilityPack
         /// </summary>
         public virtual Selector<HtmlNode> Class(string clazz) =>
             nodes => nodes.Elements().Where(n => n.GetAttributeValue("class", string.Empty)
-                                                  .Split(' ')
+                                                  .Split(WhitSpaceChars, StringSplitOptions.RemoveEmptyEntries)
                                                   .Contains(clazz));
+
+        // https://www.w3.org/TR/selectors-3/#whitespace
+        //
+        // > Only the characters "space" (U+0020), "tab" (U+0009),
+        // > "line feed" (U+000A), "carriage return" (U+000D), and
+        // > "form feed" (U+000C) can occur in whitespace.
+
+        static readonly char[] WhitSpaceChars = { ' ', '\t', '\r', '\n', '\f' };
 
         /// <summary>
         /// Generates an <a href="http://www.w3.org/TR/css3-selectors/#attribute-selectors">attribute selector</a>
@@ -107,7 +115,9 @@ namespace Fizzler.Systems.HtmlAgilityPack
             ? (Selector<HtmlNode>) (nodes => Enumerable.Empty<HtmlNode>())
             : (nodes => from n in nodes.Elements()
                         let a = n.Attributes[name]
-                        where a != null && a.Value.Split(' ').Contains(value)
+                        where a != null
+                           && a.Value.Split(WhitSpaceChars, StringSplitOptions.RemoveEmptyEntries)
+                                     .Contains(value)
                         select n);
 
         /// <summary>

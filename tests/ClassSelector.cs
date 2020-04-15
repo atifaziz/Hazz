@@ -21,6 +21,8 @@
 
 namespace Fizzler.Tests
 {
+    using Systems.HtmlAgilityPack;
+    using HtmlAgilityPack;
     using NUnit.Framework;
 
     [TestFixture]
@@ -67,6 +69,35 @@ namespace Fizzler.Tests
             Assert.AreEqual(1, result.Count);
             Assert.AreEqual("p", result[0].Name);
             Assert.AreEqual("eeeee", result[0].InnerText);
+        }
+
+        [TestCase(".a")]
+        [TestCase(".b")]
+        [TestCase(".c")]
+        [TestCase(".d")]
+        [TestCase(".e")]
+        [TestCase(".f")]
+        [TestCase(".a.c")]
+        [TestCase(".a.b.c")]
+        [TestCase(".c.e")]
+        [TestCase(".d.e.f")]
+        public void WhiteSpaceSeparators(string selector)
+        {
+            var doc = new HtmlDocument();
+            doc.LoadHtml(@"
+<!doctype html>
+<html>
+<head>
+    <title>Lorem Ipsum</title>
+</head>
+<body>
+    <p class='" + "a b\tc\rd\ne\ff" + @"'>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</body>
+</html>
+");
+            var e = doc.DocumentNode.QuerySelector(selector);
+            Assert.That(e, Is.Not.Null);
+            Assert.That(e.Name, Is.EqualTo("p"));
         }
     }
 }

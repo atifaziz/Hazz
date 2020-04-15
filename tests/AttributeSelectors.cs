@@ -148,5 +148,21 @@ namespace Fizzler.Tests
         {
             Assert.AreEqual(0, SelectList("*[class*='']").Count);
         }
+
+        [TestCase("[class~='a']")]
+        [TestCase("[class~='b']")]
+        [TestCase("[class~='c']")]
+        [TestCase("[class~='d']")]
+        [TestCase("[class~='e']")]
+        [TestCase("[class~='f']")]
+        [TestCase("[class~='a'][class~='c']")]
+        [TestCase("[class~='a'][class~='b'][class~='c']")]
+        [TestCase("[class~='c'][class~='e']")]
+        [TestCase("[class~='d'][class~='e'][class~='f']")]
+        public void WhiteSpaceSeparators(string selector)
+        {
+            var fixture = new ClassSelector();
+            fixture.WhiteSpaceSeparators(selector);
+        }
     }
 }
