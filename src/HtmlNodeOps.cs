@@ -199,8 +199,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
         /// element has no other element children.
         /// </summary>
         public virtual Selector<HtmlNode> OnlyChild() =>
-            nodes => nodes.Where(n => n.ParentNode.NodeType != HtmlNodeType.Document
-                                   && !n.ElementsAfterSelf().Concat(n.ElementsBeforeSelf()).Any());
+            nodes => nodes.Where(n => !n.ElementsAfterSelf().Concat(n.ElementsBeforeSelf()).Any());
 
         /// <summary>
         /// Generates a <a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">pseudo-class selector</a>,

@@ -21,6 +21,7 @@
 
 namespace Fizzler.Tests
 {
+    using System.Linq;
     using NUnit.Framework;
 
     [TestFixture]
@@ -40,10 +41,23 @@ namespace Fizzler.Tests
             Assert.AreEqual(2, SelectList("p:last-child").Count);
         }
 
-        [Test]
-        public void Only_Child()
+        [TestCase(":only-child")]
+        [TestCase("*:only-child")]
+        public void Only_Child(string selector)
         {
-            Assert.AreEqual(3, SelectList("*:only-child").Count);
+            var result = SelectList(selector);
+
+            Assert.AreEqual(4, result.Count);
+
+            Assert.That(result, Contains.Item(DocumentNode.GetElementsByTagName("html").Single()));
+            Assert.That(result, Contains.Item(DocumentNode.GetElementsByClassName("omg ohyeah").Single()));
+            Assert.That(result, Contains.Item(DocumentNode.GetElementsByTagName("a").Single(a => a.GetAttributeValue("href", null) == "http://colinramsay.co.uk/")));
+            Assert.That(result, Contains.Item(DocumentNode.GetElementsByTagName("input").Single()));
+        }
+
+        [Test]
+        public void Element_Only_Child()
+        {
             Assert.AreEqual(1, SelectList("p:only-child").Count);
         }
 

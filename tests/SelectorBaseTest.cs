@@ -54,9 +54,10 @@ namespace Fizzler.Tests
         }
 
         protected HtmlDocument Document { get; }
+        protected HtmlNode DocumentNode => Document.DocumentNode;
 
         protected IEnumerable<HtmlNode> Select(string selectorChain) =>
-            Document.DocumentNode.QuerySelectorAll(selectorChain);
+            DocumentNode.QuerySelectorAll(selectorChain);
 
         protected IList<HtmlNode> SelectList(string selectorChain) =>
             new ReadOnlyCollection<HtmlNode>(Select(selectorChain).ToArray());
