@@ -5,4 +5,3 @@ cd "$(dirname "$0")"
 for c in Debug Release; do
     dotnet test --no-build tests -c $c
 done
-
