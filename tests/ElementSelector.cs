@@ -56,6 +56,13 @@ namespace Fizzler.Tests
         }
 
         [Test]
+        public void Single_Uppercase_Tag_Name()
+        {
+            Assert.AreEqual(1, SelectList("BODY").Count);
+            Assert.AreEqual("body", SelectList("BODY")[0].Name);
+        }
+
+        [Test]
         public void Single_Tag_Name_Matching_Multiple_Elements()
         {
             Assert.AreEqual(3, SelectList("p").Count);

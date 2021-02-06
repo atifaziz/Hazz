@@ -42,7 +42,7 @@ namespace Fizzler.Systems.HtmlAgilityPack
         public virtual Selector<HtmlNode> Type(NamespacePrefix prefix, string type) =>
             prefix.IsSpecific
             ? (Selector<HtmlNode>) (nodes => Enumerable.Empty<HtmlNode>())
-            : (nodes => nodes.Elements().Where(n => n.Name == type));
+            : (nodes => nodes.Elements().Where(n => string.Equals(n.Name, type, StringComparison.OrdinalIgnoreCase)));
 
         /// <summary>
         /// Generates a <a href="http://www.w3.org/TR/css3-selectors/#universal-selector">universal selector</a>,
