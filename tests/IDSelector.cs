@@ -21,6 +21,8 @@
 
 namespace Fizzler.Tests
 {
+    using System.Linq;
+    using Systems.HtmlAgilityPack;
     using NUnit.Framework;
 
     [TestFixture]
@@ -35,6 +37,13 @@ namespace Fizzler.Tests
             Assert.AreEqual("div", result[0].Name);
         }
 
+        [TestCase(":not(#myDiv)")]
+        [TestCase("*:not(#myDiv)")]
+        public void Not_Basic_Selector(string selector)
+        {
+            TestNot(selector, 15, e => e.Id == "myDiv");
+        }
+
         [Test]
         public void With_Element()
         {
@@ -42,6 +51,12 @@ namespace Fizzler.Tests
 
             Assert.AreEqual(1, result.Count);
             Assert.AreEqual("div", result[0].Name);
+        }
+
+        [Test]
+        public void Not_With_Element()
+        {
+            TestNot("div:not(#myDiv)", 3, e => e.Name == "div" && e.Id == "myDiv");
         }
 
         [Test]
@@ -53,6 +68,14 @@ namespace Fizzler.Tests
             Assert.AreEqual("div", result[0].Name);
         }
 
+        [TestCase("#theBody :not(#myDiv)")]
+        [TestCase("#theBody *:not(#myDiv)")]
+        public void With_Not_Existing_ID_Descendant(string selector)
+        {
+            TestNot(selector, 12,
+                    DocumentNode.GetElementById("theBody").GetElementById("myDiv"));
+        }
+
         [Test]
         public void With_Non_Existant_ID_Descendant()
         {
@@ -61,10 +84,26 @@ namespace Fizzler.Tests
             Assert.AreEqual(0, result.Count);
         }
 
+        [TestCase("#theBody :not(#whatwhatwhat)")]
+        [TestCase("#theBody *:not(#whatwhatwhat)")]
+        public void With_Not_Non_Existant_ID_Descendant(string selector)
+        {
+            TestNot(selector, 13);
+        }
+
         [Test]
         public void With_Non_Existant_ID_Ancestor()
         {
             var result = SelectList("#whatwhatwhat #someOtherDiv");
+
+            Assert.AreEqual(0, result.Count);
+        }
+
+        [TestCase("#whatwhatwhat :not(#someOtherDiv)")]
+        [TestCase("#whatwhatwhat *:not(#someOtherDiv)")]
+        public void With_Not_Non_Existant_ID_Ancestor(string selector)
+        {
+            var result = SelectList(selector);
 
             Assert.AreEqual(0, result.Count);
         }
@@ -80,6 +119,14 @@ namespace Fizzler.Tests
         }
 
         [Test]
+        public void Not_All_Descendants_Of_ID()
+        {
+            var result = SelectList("#myDiv :not(*)");
+
+            Assert.AreEqual(0, result.Count);
+        }
+
+        [Test]
         public void Child_ID()
         {
             var result = SelectList("#theBody>#myDiv");
@@ -88,12 +135,30 @@ namespace Fizzler.Tests
             Assert.AreEqual("div", result[0].Name);
         }
 
+        [TestCase("#theBody>:not(#myDiv)")]
+        [TestCase("#theBody>*:not(#myDiv)")]
+        public void Not_Child_ID(string selector)
+        {
+            var div = DocumentNode.GetElementById("myDiv");
+            Assert.AreEqual("theBody", div.ParentNode.Id);
+            TestNot(selector, 4, div);
+        }
+
         [Test]
         public void Not_A_Child_ID()
         {
             var result = SelectList("#theBody>#someOtherDiv");
 
             Assert.AreEqual(0, result.Count);
+        }
+
+        [TestCase("#theBody>:not(#someOtherDiv)")]
+        [TestCase("#theBody>*:not(#someOtherDiv)")]
+        public void Not_Not_A_Child_ID(string selector)
+        {
+            var div = DocumentNode.GetElementById("someOtherDiv");
+            Assert.AreNotEqual("theBody", div.ParentNode.Id);
+            TestNot(selector, 5, div);
         }
 
         [Test]
@@ -106,10 +171,28 @@ namespace Fizzler.Tests
             Assert.AreEqual("p", result[1].Name);
         }
 
+        [TestCase(":not(#myDiv)>*")]
+        [TestCase("*:not(#myDiv)>*")]
+        public void All_Children_Of_Not_ID(string selector)
+        {
+            TestNot(selector, 13,
+                    from e in DocumentNode.Descendants().Elements()
+                    where e.ParentNode.Id == "myDiv"
+                    select e);
+        }
+
         [Test]
         public void All_Children_of_ID_with_no_children()
         {
             var result = SelectList("#someOtherDiv>*");
+
+            Assert.AreEqual(0, result.Count);
+        }
+
+        [Test]
+        public void Not_All_Children_of_ID_with_no_children()
+        {
+            var result = SelectList("#someOtherDiv>:not(*)");
 
             Assert.AreEqual(0, result.Count);
         }

@@ -71,27 +71,22 @@ namespace Fizzler.Tests
             Assert.AreEqual(3, SelectList("div > * > *").Count);
         }
 
-        [Test]
-        public void Adjacent_With_Pre_And_Post_Space()
+        [TestCase(1, "a + span")]
+        [TestCase(1, "a+ span")]
+        [TestCase(1, "a +span")]
+        [TestCase(1, "a+span")]
+        [TestCase(0, "a + :not(span)")]
+        [TestCase(0, "a+ :not(span)")]
+        [TestCase(0, "a +:not(span)")]
+        [TestCase(0, "a+:not(span)")]
+        [TestCase(1, "a + :not(em)")]
+        [TestCase(1, "a+ :not(em)")]
+        [TestCase(1, "a +:not(em)")]
+        [TestCase(1, "a+:not(em)")]
+        public void Adjacent(int count, string selector)
         {
-            Assert.AreEqual(1, SelectList("a + span").Count);
-        }
+            Assert.AreEqual(count, SelectList(selector).Count);
 
-        [Test]
-        public void Adjacent_With_Post_Space()
-        {
-            Assert.AreEqual(1, SelectList("a+ span").Count);
-        }
-
-        [Test]
-        public void Adjacent_With_Pre_Space()
-        {
-            Assert.AreEqual(1, SelectList("a +span").Count);
-        }
-
-        [Test]
-        public void Adjacent_With_No_Space()
-        {
             Assert.AreEqual(1, SelectList("a+span").Count);
         }
 

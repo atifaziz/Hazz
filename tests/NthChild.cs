@@ -21,6 +21,8 @@
 
 namespace Fizzler.Tests
 {
+    using System.Linq;
+    using Systems.HtmlAgilityPack;
     using NUnit.Framework;
 
     [TestFixture]
@@ -39,6 +41,16 @@ namespace Fizzler.Tests
             Assert.AreEqual("p", result[1].Name);
             Assert.AreEqual("span", result[2].Name);
             Assert.AreEqual("p", result[3].Name);
+        }
+
+        [TestCase(":not(:nth-child(2))")]
+        [TestCase("*:not(:nth-child(2))")]
+        public void Not_No_Prefix_With_Digit(string selector)
+        {
+            TestNot(selector, 12,
+                    from e in DocumentNode.Descendants().Elements()
+                    where e.ParentNode.ChildNodes.Elements().ToList().IndexOf(e) == 1
+                    select e);
         }
 
         [Test]
@@ -61,6 +73,16 @@ namespace Fizzler.Tests
             Assert.AreEqual(2, result.Count);
             Assert.AreEqual("p", result[0].Name);
             Assert.AreEqual("p", result[1].Name);
+        }
+
+        [TestCase(":not(p):not(:nth-child(2))")]
+        [TestCase("*:not(p):not(:nth-child(2))")]
+        public void Not_Element_Prefix_With_Digit(string selector)
+        {
+            TestNot(selector, 11,
+                    from e in DocumentNode.GetElementsByTagName("p")
+                    where e.ParentNode.ChildNodes.Elements().ToList().IndexOf(e) == 1
+                    select e);
         }
     }
 }

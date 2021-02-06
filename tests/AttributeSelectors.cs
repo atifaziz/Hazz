@@ -21,6 +21,8 @@
 
 namespace Fizzler.Tests
 {
+    using System.Linq;
+    using Systems.HtmlAgilityPack;
     using NUnit.Framework;
 
     [TestFixture]
@@ -33,7 +35,22 @@ namespace Fizzler.Tests
 
             Assert.AreEqual(2, results.Count);
             Assert.AreEqual("div", results[0].Name);
+            Assert.NotNull(results[0].Attributes["id"]);
             Assert.AreEqual("div", results[1].Name);
+            Assert.NotNull(results[1].Attributes["id"]);
+        }
+
+        [Test]
+        public void Element_Attr_Exists_Not()
+        {
+            TestNot("div:not([id])", 2, e => e.Name == "div" && e.Id == null);
+        }
+
+        [TestCase(":not(div):not([id])")]
+        [TestCase("*:not(div):not([id])")]
+        public void Not_Element_Not_Attr_Exists(string selector)
+        {
+            TestNot(selector, 11, e => e.Name != "div" && e.Id == null);
         }
 
         [Test]
@@ -43,6 +60,21 @@ namespace Fizzler.Tests
 
             Assert.AreEqual(1, results.Count);
             Assert.AreEqual("div", results[0].Name);
+            Assert.AreEqual("someOtherDiv", results[0].Attributes["id"].Value);
+        }
+
+        [TestCase("div:not([id=\"someOtherDiv\"])")]
+        [TestCase("div:not(#someOtherDiv)")]
+        public void Element_Not_Attr_Equals_With_Double_Quotes(string selector)
+        {
+            TestNot(selector, 3, e => e.Name != "div" || e.Id == "someOtherDiv");
+        }
+
+        [TestCase(":not(div):not([id=\"someOtherDiv\"])")]
+        [TestCase("*:not(div):not([id=\"someOtherDiv\"])")]
+        public void Not_Element_Not_Attr_Equals_With_Double_Quotes(string selector)
+        {
+            TestNot(selector, 12, e => e.Name != "div" && e.Id == "someOtherDiv");
         }
 
         [Test]
@@ -55,10 +87,32 @@ namespace Fizzler.Tests
             Assert.AreEqual("eeeee", results[0].InnerText);
         }
 
+        [TestCase("p:not([class~=\"ohyeah\"])")]
+        public void Element_Attr_Space_Separated_With_Double_Quotes_Not(string selector)
+        {
+            TestNot(selector, 2,
+                    e => e.Name != "p"
+                      || (e.Attributes["class"]?.Value.Split(' ').Contains("ohyeah") ?? false));
+        }
+
         [Test]
         public void Element_Attr_Space_Separated_With_Empty_Value()
         {
             Assert.AreEqual(0, SelectList("p[class~='']").Count);
+        }
+
+        [Test]
+        public void Element_Attr_Space_Separated_With_Empty_Value_Not()
+        {
+            var results = SelectList("p:not([class~=''])");
+
+            Assert.AreEqual(3, results.Count);
+            Assert.AreEqual("p", results[0].Name);
+            Assert.AreEqual("hitestoh", results[0].InnerText);
+            Assert.AreEqual("p", results[1].Name);
+            Assert.AreEqual("hi!!", results[1].InnerText);
+            Assert.AreEqual("p", results[2].Name);
+            Assert.AreEqual("eeeee", results[2].InnerText);
         }
 
         [Test]
@@ -72,9 +126,20 @@ namespace Fizzler.Tests
         }
 
         [Test]
-        public void Implicit_Star_Attr_Exact_With_Double_Quotes()
+        public void Element_Attr_Hyphen_Separated_With_Double_Quotes_Not()
         {
-            var results = SelectList("[class=\"checkit\"]");
+            var results = SelectList("span:not([class|=\"separated\"])");
+
+            Assert.AreEqual(1, results.Count);
+            Assert.AreEqual("span", results[0].Name);
+            Assert.AreEqual("oh", results[0].InnerText);
+        }
+
+        [TestCase("[class=\"checkit\"]")]
+        [TestCase("*[class=\"checkit\"]")]
+        public void Universal_Attr_Exact_With_Double_Quotes(string selector)
+        {
+            var results = SelectList(selector);
 
             Assert.AreEqual(2, results.Count);
             Assert.AreEqual("div", results[0].Name);
@@ -83,16 +148,13 @@ namespace Fizzler.Tests
             Assert.AreEqual("woootooowe", results[1].InnerText);
         }
 
-        [Test]
-        public void Star_Attr_Exact_With_Double_Quotes()
+        [TestCase(":not([class=\"checkit\"])")]
+        [TestCase("*:not([class=\"checkit\"])")]
+        [TestCase(":not(.checkit)")]
+        [TestCase("*:not(.checkit)")]
+        public void Universal_Not_Attr_Exact_With_Double_Quotes(string selector)
         {
-            var results = SelectList("*[class=\"checkit\"]");
-
-            Assert.AreEqual(2, results.Count);
-            Assert.AreEqual("div", results[0].Name);
-            Assert.AreEqual("woooeeeee", results[0].InnerText);
-            Assert.AreEqual("div", results[1].Name);
-            Assert.AreEqual("woootooowe", results[1].InnerText);
+            TestNot(selector, 14, DocumentNode.GetElementsByClassName("checkit"));
         }
 
         [Test]
@@ -107,10 +169,27 @@ namespace Fizzler.Tests
             Assert.AreEqual("woootooowe", results[1].InnerText);
         }
 
+        [TestCase(":not([class^=check])")]
+        [TestCase("*:not([class^=check])")]
+        public void Star_Attr_Prefix_Not(string selector)
+        {
+            TestNot(selector, 14,
+                    from e in DocumentNode.Descendants().Elements()
+                    where e.GetAttributeValue("class", string.Empty).StartsWith("check")
+                    select e);
+        }
+
         [Test]
         public void Star_Attr_Prefix_With_Empty_Value()
         {
             Assert.AreEqual(0, SelectList("*[class^='']").Count);
+        }
+
+        [TestCase("*:not([class^=''])")]
+        [TestCase(":not([class^=''])")]
+        public void Star_Not_Attr_Prefix_With_Empty_Value(string selector)
+        {
+            Assert.AreEqual(16, SelectList(selector).Count);
         }
 
         [Test]

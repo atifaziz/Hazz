@@ -22,6 +22,7 @@
 namespace Fizzler.Tests
 {
     using System.Linq;
+    using Systems.HtmlAgilityPack;
     using NUnit.Framework;
 
     [TestFixture]
@@ -61,6 +62,16 @@ namespace Fizzler.Tests
             Assert.AreEqual(1, SelectList("p:only-child").Count);
         }
 
+        [TestCase(":not(:only-child)")]
+        [TestCase("*:not(:only-child)")]
+        public void Not_Only_Child(string selector)
+        {
+            TestNot(selector, 12,
+                    from e in DocumentNode.Descendants().Elements()
+                    where e.ParentNode.ChildNodes.Count == 1
+                    select e);
+        }
+
         [Test]
         public void Empty()
         {
@@ -68,6 +79,16 @@ namespace Fizzler.Tests
             Assert.AreEqual(2, results.Count);
             Assert.AreEqual("head", results[0].Name);
             Assert.AreEqual("input", results[1].Name);
+        }
+
+        [TestCase(":not(:empty)")]
+        [TestCase("*:not(:empty)")]
+        public void Not_Empty(string selector)
+        {
+            TestNot(selector, 14,
+                    from e in DocumentNode.Descendants().Elements()
+                    where e.ChildNodes.Count == 0
+                    select e);
         }
     }
 }

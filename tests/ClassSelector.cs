@@ -21,6 +21,7 @@
 
 namespace Fizzler.Tests
 {
+    using System.Linq;
     using Systems.HtmlAgilityPack;
     using HtmlAgilityPack;
     using NUnit.Framework;
@@ -38,6 +39,13 @@ namespace Fizzler.Tests
             Assert.AreEqual("div", result[1].Name);
         }
 
+        [TestCase(":not(.checkit)")]
+        [TestCase("*:not(.checkit)")]
+        public void Not_Basic(string selector)
+        {
+            TestNot(selector, 14, DocumentNode.GetElementsByClassName("checkit"));
+        }
+
         /// <summary>
         /// Should match class="omg ohyeah"
         /// </summary>
@@ -51,6 +59,13 @@ namespace Fizzler.Tests
             Assert.AreEqual("eeeee", result[0].InnerText);
         }
 
+        [TestCase(":not(.omg):not(.ohyeah)")]
+        [TestCase("*:not(.omg):not(.ohyeah)")]
+        public void Not_Chained(string selector)
+        {
+            TestNot(selector.Trim(), 15, DocumentNode.GetElementsByClassName("omg", "ohyeah"));
+        }
+
         [Test]
         public void With_Element()
         {
@@ -59,6 +74,15 @@ namespace Fizzler.Tests
             Assert.AreEqual(1, result.Count);
             Assert.AreEqual("p", result[0].Name);
             Assert.AreEqual("eeeee", result[0].InnerText);
+        }
+
+        [TestCase("p:not(.ohyeah)")]
+        public void Not_With_Element(string selector)
+        {
+            TestNot(selector, 2,
+                    from p in DocumentNode.Descendants("p")
+                    from e in p.GetElementsByClassName("ohyeah")
+                    select e);
         }
 
         [Test]
@@ -98,6 +122,16 @@ namespace Fizzler.Tests
             var e = doc.DocumentNode.QuerySelector(selector);
             Assert.That(e, Is.Not.Null);
             Assert.That(e.Name, Is.EqualTo("p"));
+        }
+
+        [TestCase("div :not(.ohyeah)")]
+        [TestCase("div *:not(.ohyeah)")]
+        public void Parent_Not_Class_Selector(string selector)
+        {
+            TestNot(selector, 6,
+                    from div in DocumentNode.Descendants("div")
+                    from e in div.GetElementsByClassName("ohyeah")
+                    select e);
         }
     }
 }

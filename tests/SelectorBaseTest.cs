@@ -31,6 +31,7 @@ namespace Fizzler.Tests
     using System.Reflection;
     using Fizzler.Systems.HtmlAgilityPack;
     using HtmlAgilityPack;
+    using NUnit.Framework;
 
     #endregion
 
@@ -61,5 +62,23 @@ namespace Fizzler.Tests
 
         protected IList<HtmlNode> SelectList(string selectorChain) =>
             new ReadOnlyCollection<HtmlNode>(Select(selectorChain).ToArray());
+
+        protected void TestNot(string selector, int count, Func<HtmlNode, bool> predicate) =>
+            TestNot(selector, count, from e in DocumentNode.Descendants().Elements()
+                                     where predicate(e)
+                                     select e);
+
+        protected void TestNot(string selector, int count, params HtmlNode[] nodes) =>
+            TestNot(selector, count, nodes.AsEnumerable());
+
+        protected void TestNot(string selector, int count, IEnumerable<HtmlNode> nodes)
+        {
+            var results = SelectList(selector);
+
+            Assert.AreEqual(count, results.Count);
+
+            foreach (var node in nodes)
+                Assert.False(results.Contains(node), node.OuterHtml);
+        }
     }
 }

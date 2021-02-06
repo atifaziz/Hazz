@@ -47,5 +47,11 @@ namespace Fizzler.Tests
             from e in node.Descendants().Elements()
             where SplitClassNames(e.GetAttributeValue("class", string.Empty)).Intersect(names, StringComparer.Ordinal).Any()
             select e;
+
+        public static HtmlNode FindElementById(this HtmlNode node, string id) =>
+            node.Descendants().Elements().SingleOrDefault(e => e.Id == id);
+
+        public static HtmlNode GetElementById(this HtmlNode node, string id) =>
+            node.FindElementById(id) ?? throw new Exception($"Element with ID \"{id}\" not found.");
     }
 }
