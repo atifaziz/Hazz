@@ -38,6 +38,7 @@ test_script:
 - sh: ./test.sh
 artifacts:
 - path: dist\*.nupkg
+- path: dist\*.snupkg
 deploy:
 - provider: NuGet
   server: https://www.myget.org/F/raboof/api/v2/package
